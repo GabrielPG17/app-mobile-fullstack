@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -7,42 +6,46 @@ import {
   TouchableOpacity,
   StyleSheet,
   StatusBar,
-} from 'react-native';
+} from "react-native";
 
-import { Ionicons } from '@expo/vector-icons';
-import colors from '../styles/colors';
+import { Ionicons } from "@expo/vector-icons";
+import colors from "../styles/colors";
 
 const opcoes = [
   {
-    titulo: 'Minhas Receitas',
-    descricao: 'Organize suas receitas favoritas.',
-    icone: 'restaurant-outline',
-    tela: 'Receitas',
+    titulo: "Minhas Receitas",
+    descricao: "Organize suas receitas favoritas.",
+    icone: "restaurant-outline",
+    tela: "Receitas",
   },
   {
-    titulo: 'Ingredientes',
-    descricao: 'Gerencie os ingredientes das suas receitas.',
-    icone: 'nutrition-outline',
-    tela: 'Ingredientes',
+    titulo: "Categorias",
+    descricao: "Organize suas categorias de receitas.",
+    icone: "grid-outline",
+    tela: "Categorias",
   },
   {
-    titulo: 'Meus Planos',
-    descricao: 'Organize suas refeições durante a semana.',
-    icone: 'calendar-outline',
-    tela: 'Planos',
+    titulo: "Meus Planos",
+    descricao: "Organize suas refeições durante a semana.",
+    icone: "calendar-outline",
+    tela: "Planos",
   },
 ];
-
+const categorias = [
+  { name: "Entradas", emoji: "🥟" },
+  { name: "Saladas", emoji: "🥗" },
+  { name: "Sopas e caldos", emoji: "🍲" },
+  { name: "Massas", emoji: "🍝" },
+  { name: "Carnes", emoji: "🥩" },
+  { name: "Peixes e frutos do mar", emoji: "🐟" },
+  { name: "Lanches e salgados", emoji: "🥪" },
+  { name: "Sobremesas", emoji: "🍮" },
+  { name: "Bebidas", emoji: "🍹" },
+];
 export default function HomeScreen({ navigation }) {
   return (
-    <ScrollView
-      style={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
-      <StatusBar
-        backgroundColor={colors.background}
-        barStyle="dark-content"
-      />
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <StatusBar backgroundColor={colors.background} barStyle="dark-content" />
 
       <View style={styles.header}>
         <View>
@@ -54,7 +57,7 @@ export default function HomeScreen({ navigation }) {
 
         <TouchableOpacity
           style={styles.userButton}
-          onPress={() => navigation.navigate('Perfil')}
+          onPress={() => navigation.navigate("Perfil")}
         >
           <Ionicons
             name="person-circle-outline"
@@ -66,13 +69,36 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       <View style={styles.banner}>
-        <Text style={styles.bannerTitle}>
-          Bem-vindo ao ReceitasJA!
-        </Text>
+        <Text style={styles.bannerTitle}>Bem-vindo ao ReceitasJA!</Text>
 
         <Text style={styles.bannerDescription}>
           Descubra receitas, organize ingredientes e planeje suas refeições.
         </Text>
+      </View>
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Categorias</Text>
+
+          <TouchableOpacity onPress={() => navigation.navigate("Categorias")}>
+            <Text style={styles.seeAll}>Ver todas</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.chipsWrap}>
+          {categorias.map((cat) => (
+            <TouchableOpacity
+              key={cat.name}
+              style={styles.chip}
+              onPress={() =>
+                navigation.navigate("Receitas", { categoria: cat.name })
+              }
+            >
+              <Text style={styles.chipText}>
+                {cat.emoji} {cat.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
       <View style={styles.section}>
@@ -85,21 +111,13 @@ export default function HomeScreen({ navigation }) {
             onPress={() => navigation.navigate(item.tela)}
           >
             <View style={styles.cardIcon}>
-              <Ionicons
-                name={item.icone}
-                size={27}
-                color={colors.primary}
-              />
+              <Ionicons name={item.icone} size={27} color={colors.primary} />
             </View>
 
             <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>
-                {item.titulo}
-              </Text>
+              <Text style={styles.cardTitle}>{item.titulo}</Text>
 
-              <Text style={styles.cardDescription}>
-                {item.descricao}
-              </Text>
+              <Text style={styles.cardDescription}>{item.descricao}</Text>
             </View>
 
             <Ionicons
@@ -130,14 +148,14 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 55,
     marginBottom: 25,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
   pageTitle: {
     fontSize: 23,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.text,
   },
 
@@ -152,14 +170,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 5,
   },
 
   userText: {
     fontSize: 11,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.text,
   },
 
@@ -168,12 +186,12 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     padding: 23,
     minHeight: 145,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 
   bannerTitle: {
     fontSize: 23,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.text,
     marginBottom: 10,
   },
@@ -190,9 +208,42 @@ const styles = StyleSheet.create({
 
   sectionTitle: {
     fontSize: 17,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.text,
     marginBottom: 14,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 14,
+  },
+
+  seeAll: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: colors.primary,
+  },
+
+  chipsWrap: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+
+  chip: {
+    backgroundColor: colors.white,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+
+  chipText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: colors.text,
   },
 
   card: {
@@ -200,8 +251,8 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     padding: 18,
     marginBottom: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
     borderColor: colors.border,
   },
@@ -211,8 +262,8 @@ const styles = StyleSheet.create({
     height: 49,
     borderRadius: 13,
     backgroundColor: colors.primaryLight,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   cardContent: {
@@ -223,7 +274,7 @@ const styles = StyleSheet.create({
 
   cardTitle: {
     fontSize: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: colors.primary,
     marginBottom: 6,
   },
@@ -237,7 +288,7 @@ const styles = StyleSheet.create({
   footer: {
     marginTop: 15,
     marginBottom: 25,
-    alignItems: 'center',
+    alignItems: "center",
   },
 
   footerText: {

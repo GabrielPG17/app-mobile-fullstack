@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import LoginScreen from '../screens/LoginScreen';
 import CadastroScreen from '../screens/CadastroScreen';
 import HomeScreen from '../screens/HomeScreen';
+import CategoriasScreen from '../screens/CategoriasScreen';
 
 import colors from '../styles/colors';
 
@@ -57,7 +58,7 @@ function MainTabs() {
     >
       <Tab.Screen name="Inicio" component={HomeScreen} />
       <Tab.Screen name="Receitas" component={HomeScreen} />
-      <Tab.Screen name="Ingredientes" component={HomeScreen} />
+      <Tab.Screen name="Categorias" component={HomeScreen} />
       <Tab.Screen name="Planos" component={HomeScreen} />
       <Tab.Screen name="Perfil" component={HomeScreen} />
     </Tab.Navigator>
@@ -85,6 +86,11 @@ export default function AppNavigator() {
       <Stack.Screen
         name="Principal"
         component={MainTabs}
+      />
+      <Stack.Screen
+        name="Categorias"
+        component={CategoriasScreen}
+        options={{ headerShown: true, title: 'Categorias' }}
       />
     </Stack.Navigator>
   );
